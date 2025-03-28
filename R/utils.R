@@ -46,7 +46,7 @@ filter_by_column <- function(data, cols = NULL) {
   } else {
     cols <- names(data)[names(data) %in% cols]
 
-    df <- dplyr::select(data, any_of(cols))
+    df <- dplyr::select(data, dplyr::any_of(cols))
   }
   return(df)
 }
