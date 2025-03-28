@@ -1,16 +1,17 @@
 Package: BioTableModule
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Shiny module for tables of biological data
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Liz", "Ing-Simmons",
+      email = "liz.ing-simmons@kcl.ac.uk",
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Shiny module for tables of biological data, with sensible defaults.
+    Small numbers are automatically formatted using scientific formatting, and 
+    gene names are italicised.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
