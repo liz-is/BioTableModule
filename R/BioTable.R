@@ -1,3 +1,18 @@
+#' Creates UI for a BioTable
+#'
+#' UI for a BioTable, which includes a table description, column selector, and
+#' the table itself. Selecting columns in the column selector automatically
+#' updates the columns that are included in the table.
+#'
+#'
+#' @param id id for the module
+#' @param all_cols character vector of all columns to list in the selection
+#' @param default_cols columns to make visible by default
+#'
+#' @returns a shiny::tagList
+#' @export
+#'
+#' @examples
 tableUI <- function(id, all_cols, default_cols = NULL) {
   table_info_filename <- paste0("text/desc_", id, ".md")
 
@@ -20,6 +35,21 @@ tableUI <- function(id, all_cols, default_cols = NULL) {
           DT::DTOutput(shiny::NS(id, "table")))
 }
 
+#' Creates server for a BioTable
+#'
+#' Server function for a BioTable, which filters the table according to columns
+#' selected in the UI (tableUI) and optionally according to a row filter which
+#' can be shared across elements.
+#'
+#' @param id id for the module
+#' @param data a data frame or similar object accepted by dplyr::filter/dplyr::select
+#' @param row_id optional reactive element to use to filter rows
+#' @param id_column_name optional column name to use for filtering
+#'
+#' @returns
+#' @export
+#'
+#' @examples
 tableServer <- function(id,
                         data,
                         row_id = shiny::reactive(NULL),
