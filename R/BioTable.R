@@ -16,10 +16,6 @@
 tableUI <- function(id) {
   table_info_filename <- paste0("text/desc_", id, ".md")
 
-  if (is.null(default_cols)) {
-    default_cols <- all_cols
-  }
-
   col_select <- shinyWidgets::virtualSelectInput(
     inputId = shiny::NS(id, "cols"),
     label = "Columns to show",
