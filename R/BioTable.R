@@ -6,8 +6,6 @@
 #'
 #'
 #' @param id id for the module
-#' @param all_cols character vector of all columns to list in the selection
-#' @param default_cols columns to make visible by default
 #'
 #' @returns a shiny::tagList
 #' @export
@@ -41,6 +39,7 @@ tableUI <- function(id) {
 #' @param data a data frame or similar object accepted by dplyr::filter/dplyr::select
 #' @param row_id optional reactive element to use to filter rows
 #' @param id_column_name optional column name to use for filtering
+#' @param default_cols defaults columns to show in output
 #'
 #' @returns
 #' @export

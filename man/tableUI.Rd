@@ -4,14 +4,10 @@
 \alias{tableUI}
 \title{Creates UI for a BioTable}
 \usage{
-tableUI(id, all_cols, default_cols = NULL)
+tableUI(id)
 }
 \arguments{
 \item{id}{id for the module}
-
-\item{all_cols}{character vector of all columns to list in the selection}
-
-\item{default_cols}{columns to make visible by default}
 }
 \value{
 a shiny::tagList

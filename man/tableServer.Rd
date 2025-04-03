@@ -4,7 +4,13 @@
 \alias{tableServer}
 \title{Creates server for a BioTable}
 \usage{
-tableServer(id, data, row_id = shiny::reactive(NULL), id_column_name = NULL)
+tableServer(
+  id,
+  data,
+  row_id = shiny::reactive(NULL),
+  id_column_name = NULL,
+  default_cols = NULL
+)
 }
 \arguments{
 \item{id}{id for the module}
@@ -14,6 +20,8 @@ tableServer(id, data, row_id = shiny::reactive(NULL), id_column_name = NULL)
 \item{row_id}{optional reactive element to use to filter rows}
 
 \item{id_column_name}{optional column name to use for filtering}
+
+\item{default_cols}{defaults columns to show in output}
 }
 \description{
 Server function for a BioTable, which filters the table according to columns
