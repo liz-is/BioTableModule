@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-tableUI <- function(id, all_cols, default_cols = NULL) {
+tableUI <- function(id) {
   table_info_filename <- paste0("text/desc_", id, ".md")
 
   if (is.null(default_cols)) {
@@ -23,8 +23,8 @@ tableUI <- function(id, all_cols, default_cols = NULL) {
   col_select <- shinyWidgets::virtualSelectInput(
     inputId = shiny::NS(id, "cols"),
     label = "Columns to show",
-    choices = all_cols,
-    selected = default_cols,
+    choices = NULL,
+    selected = NULL,
     multiple = TRUE,
     width = "100%",
     dropboxWrapper = "body"
@@ -53,10 +53,18 @@ tableUI <- function(id, all_cols, default_cols = NULL) {
 tableServer <- function(id,
                         data,
                         row_id = shiny::reactive(NULL),
-                        id_column_name = NULL) {
+                        id_column_name = NULL,
+                        default_cols = NULL) {
   stopifnot(shiny::is.reactive(row_id))
   stopifnot(!shiny::is.reactive(data))
   stopifnot(!shiny::is.reactive(id_column_name))
+
+  if (is.null(default_cols)) {
+    default_cols <- colnames(data)
+  }
+  shinyWidgets::updateVirtualSelect(shiny::NS(id, "cols"),
+                                    choices = colnames(data),
+                                    selected = default_cols)
 
   shiny::moduleServer(id, function(input, output, session) {
     filtered_data <- shiny::reactive({
