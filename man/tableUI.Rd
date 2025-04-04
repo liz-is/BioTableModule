@@ -4,10 +4,12 @@
 \alias{tableUI}
 \title{Creates UI for a BioTable}
 \usage{
-tableUI(id)
+tableUI(id, description_dir = "desc")
 }
 \arguments{
 \item{id}{id for the module}
+
+\item{description_dir}{optional, path to directory containing .md file with a table description}
 }
 \value{
 a shiny::tagList

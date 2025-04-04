@@ -6,7 +6,7 @@
 #'
 #'
 #' @param id id for the module
-#'
+#' @param description_dir optional, path to directory containing .md file with a table description
 #' @returns a shiny::tagList
 #' @export
 #'
