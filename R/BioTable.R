@@ -40,7 +40,7 @@ tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper 
 
   if (md_description) {
     if (file.exists(table_info_filename)){
-      tags <- c(shiny::includeMarkdown(table_info_filename), tags)
+      tags <- c(list(shiny::includeMarkdown(table_info_filename)), tags)
     } else {
     warning("Description file ", table_info_filename, " not found!")
     }
