@@ -6,8 +6,11 @@
 #'
 #'
 #' @param id id for the module
-#' @param description_dir optional, path to directory containing .md file with a
-#'   table description
+#' @param md_description logical, whether to include a table description from a
+#'   markdown file. The file is expected to be named `desc/{id}.md`. The
+#'   directory can be specified using `description_dir`
+#' @param description_dir optional, path to directory containing the table
+#'   description file
 #' @param helper logical, whether to add a helper element using the shinyhelper
 #'   package. If TRUE, looks for a file named `{id}.md` in a `helpfiles/`
 #'   directory
@@ -16,7 +19,7 @@
 #' @export
 #'
 #' @examples
-tableUI <- function(id, description_dir = "desc", helper = TRUE) {
+tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper = TRUE) {
   table_info_filename <- file.path(description_dir, paste0(id, ".md"))
 
   col_select <- shinyWidgets::virtualSelectInput(
@@ -33,9 +36,17 @@ tableUI <- function(id, description_dir = "desc", helper = TRUE) {
     col_select <- shinyhelper::helper(col_select, content = id)
   }
 
-  shiny::tagList(shiny::includeMarkdown(table_info_filename),
-          col_select,
-          DT::DTOutput(shiny::NS(id, "table")))
+  tags <- list(col_select, DT::DTOutput(shiny::NS(id, "table")))
+
+  if (md_description) {
+    if (file.exists(table_info_filename)){
+      tags <- c(shiny::includeMarkdown(table_info_filename), tags)
+    } else {
+    warning("Description file ", table_info_filename, " not found!")
+    }
+  }
+
+  shiny::tagList(tags)
 }
 
 #' Creates server for a BioTable

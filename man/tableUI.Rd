@@ -4,13 +4,17 @@
 \alias{tableUI}
 \title{Creates UI for a BioTable}
 \usage{
-tableUI(id, description_dir = "desc", helper = TRUE)
+tableUI(id, md_description = TRUE, description_dir = "desc", helper = TRUE)
 }
 \arguments{
 \item{id}{id for the module}
 
-\item{description_dir}{optional, path to directory containing .md file with a
-table description}
+\item{md_description}{logical, whether to include a table description from a
+markdown file. The file is expected to be named `desc/{id}.md`. The
+directory can be specified using `description_dir`}
+
+\item{description_dir}{optional, path to directory containing the table
+description file}
 
 \item{helper}{logical, whether to add a helper element using the shinyhelper
 package. If TRUE, looks for a file named `{id}.md` in a `helpfiles/`
