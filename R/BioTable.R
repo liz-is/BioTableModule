@@ -59,7 +59,11 @@ tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper 
 #' @param data a data frame or similar object accepted by dplyr::filter/dplyr::select
 #' @param row_id optional reactive element to use to filter rows
 #' @param id_column_name optional column name to use for filtering
-#' @param default_cols defaults columns to show in output
+#' @param default_cols default columns to show in output
+#' @param sci_format_cols columns that should have scientific formatting
+#'   applied. By default all numeric values in these columns will be rounded to
+#'   three significant digits, and values < 0.001 will have scientific
+#'   formatting applied.
 #'
 #' @returns
 #' @export
@@ -69,7 +73,8 @@ tableServer <- function(id,
                         data,
                         row_id = shiny::reactive(NULL),
                         id_column_name = NULL,
-                        default_cols = NULL) {
+                        default_cols = NULL,
+                        sci_format_cols = NULL) {
   stopifnot(shiny::is.reactive(row_id))
   stopifnot(!shiny::is.reactive(data))
   stopifnot(!shiny::is.reactive(id_column_name))
@@ -87,17 +92,19 @@ tableServer <- function(id,
         filter_by_column(input$cols)
     })
 
-    output$table <- DT::renderDT({
-      cols_to_format <- get_cols_to_format(filtered_data(), pattern = "SE|Beta|FDR|Pvalue|P-value")
-      signif_digit_js <- DT::JS(
-        "function(row, data) {",
-        "for (i = 1; i < data.length; i++) {",
-        "if (data[i]<0.001 && data[i] > 0){",
-        "$('td:eq('+i+')', row).html(data[i].toExponential(2));",
-        "}",
-        "}",
-        "}"
+    cols_to_format <- get_cols_to_format(data, cols = sci_format_cols)
+    signif_digit_js <- DT::JS(
+      "function(row, data) {",
+      "for (i = 1; i < data.length; i++) {",
+      "if (data[i]<0.001 && data[i] > 0){",
+      "$('td:eq('+i+')', row).html(data[i].toExponential(2));",
+      "}",
+      "}",
+      "}"
       )
+
+    output$table <- DT::renderDT({
+      cols_to_format <- intersect(cols_to_format, colnames(filtered_data()))
 
       dt <- DT::datatable(
         filtered_data(),

@@ -55,14 +55,29 @@ filter_by_column <- function(data, cols = NULL) {
 #' Find columns matching a pattern
 #'
 #' @param data a data frame
-#' @param pattern a regular expression specifying column names to match
+#' @param cols either a vector or column names or a regular expression
+#'   specifying column names to match. Will be treated as a regex if length is
+#'   1, otherwise as a vector of column names.
 #'
 #' @returns a vector of column names
 #' @export
 #'
 #' @examples
 #' get_cols_to_format(iris, pattern = "Length|Width")
-get_cols_to_format <- function(data, pattern) {
+get_cols_to_format <- function(data, cols = NULL) {
+  if (is.null(cols)) {
+    return(NULL)
+  }
+
   columns <- names(data)
-  columns[stringr::str_detect(columns, pattern = pattern)]
+  if (length(cols) == 1) {
+    return(columns[stringr::str_detect(columns, pattern = cols)])
+  }
+  else {
+    if (!all(cols %in% columns)){
+      warning("Columns not found:", paste0(setdiff(cols, columns), collapse = ", "))
+    }
+    cols <- cols[cols %in% columns]
+    return(cols)
+  }
 }
