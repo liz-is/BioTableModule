@@ -11,8 +11,8 @@
 #' @export
 #'
 #' @examples
-tableUI <- function(id) {
-  table_info_filename <- paste0("text/desc_", id, ".md")
+tableUI <- function(id, description_dir = "desc") {
+  table_info_filename <- file.path(description_dir, paste0(id, ".md"))
 
   col_select <- shinyWidgets::virtualSelectInput(
     inputId = shiny::NS(id, "cols"),
