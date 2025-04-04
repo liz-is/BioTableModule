@@ -9,6 +9,9 @@ data into a Shiny app, with sensible default formatting. Small numbers are
 automatically formatted using scientific formatting, and gene names are 
 italicised.
 
+This package is inspired by the [EPIGEN MeQTL Database](https://epicmeqtl.kcl.ac.uk/) 
+Shiny app ([code](https://github.com/svillicana/EPIGEN_MeQTL_Database)).
+
 ## Installation
 
 You can install the development version of BioTableModule from [GitHub](https://github.com/) with:
@@ -20,10 +23,5 @@ pak::pak("liz-is/BioTableModule")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(BioTableModule)
-## basic example code
-```
+A simple example app is available here: https://github.com/liz-is/BioTableDemo
 
