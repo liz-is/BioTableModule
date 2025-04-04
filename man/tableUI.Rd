@@ -4,12 +4,17 @@
 \alias{tableUI}
 \title{Creates UI for a BioTable}
 \usage{
-tableUI(id, description_dir = "desc")
+tableUI(id, description_dir = "desc", helper = TRUE)
 }
 \arguments{
 \item{id}{id for the module}
 
-\item{description_dir}{optional, path to directory containing .md file with a table description}
+\item{description_dir}{optional, path to directory containing .md file with a
+table description}
+
+\item{helper}{logical, whether to add a helper element using the shinyhelper
+package. If TRUE, looks for a file named `{id}.md` in a `helpfiles/`
+directory}
 }
 \value{
 a shiny::tagList

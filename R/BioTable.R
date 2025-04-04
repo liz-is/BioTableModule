@@ -6,12 +6,17 @@
 #'
 #'
 #' @param id id for the module
-#' @param description_dir optional, path to directory containing .md file with a table description
+#' @param description_dir optional, path to directory containing .md file with a
+#'   table description
+#' @param helper logical, whether to add a helper element using the shinyhelper
+#'   package. If TRUE, looks for a file named `{id}.md` in a `helpfiles/`
+#'   directory
+#'
 #' @returns a shiny::tagList
 #' @export
 #'
 #' @examples
-tableUI <- function(id, description_dir = "desc") {
+tableUI <- function(id, description_dir = "desc", helper = TRUE) {
   table_info_filename <- file.path(description_dir, paste0(id, ".md"))
 
   col_select <- shinyWidgets::virtualSelectInput(
@@ -22,7 +27,11 @@ tableUI <- function(id, description_dir = "desc") {
     multiple = TRUE,
     width = "100%",
     dropboxWrapper = "body"
-  ) |> shinyhelper::helper(content = id)
+  )
+
+  if (helper){
+    col_select <- shinyhelper::helper(col_select, content = id)
+  }
 
   shiny::tagList(shiny::includeMarkdown(table_info_filename),
           col_select,
