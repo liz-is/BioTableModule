@@ -4,12 +4,14 @@
 \alias{get_cols_to_format}
 \title{Find columns matching a pattern}
 \usage{
-get_cols_to_format(data, pattern)
+get_cols_to_format(data, cols = NULL)
 }
 \arguments{
 \item{data}{a data frame}
 
-\item{pattern}{a regular expression specifying column names to match}
+\item{cols}{either a vector or column names or a regular expression
+specifying column names to match. Will be treated as a regex if length is
+1, otherwise as a vector of column names.}
 }
 \value{
 a vector of column names

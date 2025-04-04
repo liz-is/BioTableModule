@@ -7,21 +7,32 @@
 tableServer(
   id,
   data,
+  default_cols = NULL,
+  sci_format_cols = NULL,
+  gene_name_cols = NULL,
   row_id = shiny::reactive(NULL),
-  id_column_name = NULL,
-  default_cols = NULL
+  id_column_name = NULL
 )
 }
 \arguments{
 \item{id}{id for the module}
 
-\item{data}{a data frame or similar object accepted by dplyr::filter/dplyr::select}
+\item{data}{a data frame or similar object accepted by
+dplyr::filter/dplyr::select}
+
+\item{default_cols}{default columns to show in output}
+
+\item{sci_format_cols}{columns that should have scientific formatting
+applied. By default all numeric values in these columns will be rounded to
+three significant digits, and values < 0.001 will have scientific
+formatting applied.}
+
+\item{gene_name_cols}{columns containing gene names, which should be
+italicized in the output table}
 
 \item{row_id}{optional reactive element to use to filter rows}
 
 \item{id_column_name}{optional column name to use for filtering}
-
-\item{default_cols}{defaults columns to show in output}
 }
 \description{
 Server function for a BioTable, which filters the table according to columns

@@ -56,14 +56,17 @@ tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper 
 #' can be shared across elements.
 #'
 #' @param id id for the module
-#' @param data a data frame or similar object accepted by dplyr::filter/dplyr::select
-#' @param row_id optional reactive element to use to filter rows
-#' @param id_column_name optional column name to use for filtering
+#' @param data a data frame or similar object accepted by
+#'   dplyr::filter/dplyr::select
 #' @param default_cols default columns to show in output
 #' @param sci_format_cols columns that should have scientific formatting
 #'   applied. By default all numeric values in these columns will be rounded to
 #'   three significant digits, and values < 0.001 will have scientific
 #'   formatting applied.
+#' @param gene_name_cols columns containing gene names, which should be
+#'   italicized in the output table
+#' @param row_id optional reactive element to use to filter rows
+#' @param id_column_name optional column name to use for filtering
 #'
 #' @returns
 #' @export
@@ -71,10 +74,11 @@ tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper 
 #' @examples
 tableServer <- function(id,
                         data,
-                        row_id = shiny::reactive(NULL),
-                        id_column_name = NULL,
                         default_cols = NULL,
-                        sci_format_cols = NULL) {
+                        sci_format_cols = NULL,
+                        gene_name_cols = NULL,
+                        row_id = shiny::reactive(NULL),
+                        id_column_name = NULL) {
   stopifnot(shiny::is.reactive(row_id))
   stopifnot(!shiny::is.reactive(data))
   stopifnot(!shiny::is.reactive(id_column_name))
@@ -117,8 +121,8 @@ tableServer <- function(id,
         )
       ) |> DT::formatSignif(cols_to_format, digits = 3)
 
-      if ("Gene" %in% names(filtered_data())) {
-        dt <- DT::formatStyle(dt, "Gene", fontStyle = "italic")
+      if (!is.null(gene_name_cols)) {
+        dt <- DT::formatStyle(dt, gene_name_cols, fontStyle = "italic")
       }
       dt
     })
