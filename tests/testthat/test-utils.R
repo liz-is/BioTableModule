@@ -40,3 +40,22 @@ test_that("column finding handles incorrect column name", {
 
   expect_equal(out, "Sepal.Length")
 })
+
+# filter_by_row
+
+test_that("row finding handles NULL", {
+  expect_equal(filter_by_row(iris, "Species", id = NULL),
+               iris)
+})
+
+test_that("row finding handles empty string", {
+  expect_equal(filter_by_row(iris, "Species", id = ""),
+               iris)
+})
+
+
+test_that("row finding works", {
+  expect_equal(filter_by_row(iris, "Species", id = "virginica"),
+               iris[iris$Species == "virginica",],
+               ignore_attr = TRUE)
+})
