@@ -75,7 +75,7 @@ get_cols_to_format <- function(data, cols = NULL) {
   }
   else {
     if (!all(cols %in% columns)){
-      warning("Columns not found:", paste0(setdiff(cols, columns), collapse = ", "))
+      warning("Columns not found: ", paste0(setdiff(cols, columns), collapse = ", "))
     }
     cols <- cols[cols %in% columns]
     return(cols)
