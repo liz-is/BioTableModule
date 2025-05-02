@@ -60,9 +60,13 @@ tableUI <- function(id, md_description = TRUE, description_dir = "desc", helper 
 #'   dplyr::filter/dplyr::select
 #' @param default_cols default columns to show in output
 #' @param sci_format_cols columns that should have scientific formatting
-#'   applied. By default all numeric values in these columns will be rounded to
-#'   three significant digits, and values < 0.001 will have scientific
-#'   formatting applied.
+#'   applied. By all numeric values in these columns will be rounded to
+#'   `sci_format_digits` (default 3) significant digits, and values less than
+#'   `sci_format_threshold` (default 0.001) will have scientific formatting
+#'   applied.
+#' @param sci_format_threshold threshold below which numbers will be formatted
+#'   with scientific formatting
+#' @param sci_format_digits number of significant digits for numeric formatting
 #' @param gene_name_cols columns containing gene names, which should be
 #'   italicized in the output table
 #' @param row_id optional reactive element to use to filter rows
@@ -76,6 +80,8 @@ tableServer <- function(id,
                         data,
                         default_cols = NULL,
                         sci_format_cols = NULL,
+                        sci_format_threshold = 0.001,
+                        sci_format_digits = 3,
                         gene_name_cols = NULL,
                         row_id = shiny::reactive(NULL),
                         id_column_name = NULL) {
@@ -100,7 +106,9 @@ tableServer <- function(id,
     signif_digit_js <- DT::JS(
       "function(row, data) {",
       "for (i = 1; i < data.length; i++) {",
-      "if (data[i]<0.001 && data[i] > 0){",
+      "if (data[i]<",
+      as.character(sci_format_threshold),
+      " && data[i] > 0){",
       "$('td:eq('+i+')', row).html(data[i].toExponential(2));",
       "}",
       "}",
@@ -119,7 +127,7 @@ tableServer <- function(id,
           buttons = c('csv', 'excel'),
           rowCallback = signif_digit_js
         )
-      ) |> DT::formatSignif(cols_to_format, digits = 3)
+      ) |> DT::formatSignif(cols_to_format, digits = sci_format_digits)
 
       if (!is.null(gene_name_cols)) {
         dt <- DT::formatStyle(dt, gene_name_cols, fontStyle = "italic")

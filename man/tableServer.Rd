@@ -9,6 +9,8 @@ tableServer(
   data,
   default_cols = NULL,
   sci_format_cols = NULL,
+  sci_format_threshold = 0.001,
+  sci_format_digits = 3,
   gene_name_cols = NULL,
   row_id = shiny::reactive(NULL),
   id_column_name = NULL
@@ -23,9 +25,15 @@ dplyr::filter/dplyr::select}
 \item{default_cols}{default columns to show in output}
 
 \item{sci_format_cols}{columns that should have scientific formatting
-applied. By default all numeric values in these columns will be rounded to
-three significant digits, and values < 0.001 will have scientific
-formatting applied.}
+applied. By all numeric values in these columns will be rounded to
+`sci_format_digits` (default 3) significant digits, and values less than
+`sci_format_threshold` (default 0.001) will have scientific formatting
+applied.}
+
+\item{sci_format_threshold}{threshold below which numbers will be formatted
+with scientific formatting}
+
+\item{sci_format_digits}{number of significant digits for numeric formatting}
 
 \item{gene_name_cols}{columns containing gene names, which should be
 italicized in the output table}
