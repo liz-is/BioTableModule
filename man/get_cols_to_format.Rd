@@ -20,5 +20,5 @@ a vector of column names
 Find columns matching a pattern
 }
 \examples{
-get_cols_to_format(iris, pattern = "Length|Width")
+get_cols_to_format(iris, cols = "Length|Width")
 }

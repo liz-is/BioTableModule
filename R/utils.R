@@ -63,7 +63,7 @@ filter_by_column <- function(data, cols = NULL) {
 #' @export
 #'
 #' @examples
-#' get_cols_to_format(iris, pattern = "Length|Width")
+#' get_cols_to_format(iris, cols = "Length|Width")
 get_cols_to_format <- function(data, cols = NULL) {
   if (is.null(cols)) {
     return(NULL)
